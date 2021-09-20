@@ -1,0 +1,90 @@
+{namespace v=FluidTYPO3\Vhs\ViewHelpers}
+
+<f:layout name="Default"/>
+
+This Template is responsible for displaying a single view for a domain object
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+Resources:
+Private:
+Templates:
+Show.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="main">
+    <f:format.html>{branche.text}</f:format.html>
+    <div class="frame">
+        <f:for each="{array_branchen_products}" as="array_branchen_product">
+            <f:if condition="{array_branchen_product.products.0.title}">
+                <h2>{array_branchen_product.page.title}</h2>
+                <div class="row row-eq-height mb-5 ">
+                    <f:for each="{array_branchen_product.products}" as="solution">
+                        <div class="col-lg-3 col-sm-3 col-xs-12 mb-2">
+                            <div class="col_solution">
+                                <f:link.action pageUid="{solution.pid}" action="show"
+                                               controller="{f:if(condition: '{solution.number}==\'\'', then: 'Product', else: 'Solution')}"
+                                               arguments="{solution : solution,product : solution}">
+                                    <figure class="image">
+                                        <f:if condition="{solution.image}">
+                                            <f:then>
+                                                <div class="wrap_image 1">
+                                                    <div class="vertical-center">
+                                                        <img src="{f:uri.image(src: 'EXT:bootstrap_package/Resources/Public/Images/blank.gif')}"
+                                                             data-src="{f:uri.image(image: solution.image.0,  height: '185')}"
+                                                             data-large="{f:uri.image(image: solution.image.0,  width: '640')}"
+                                                             data-medium="{f:uri.image(image: solution.image.0, width: '940')}"
+                                                             data-small="{f:uri.image(image: solution.image.0, width: '990')}"
+                                                             data-extrasmall="{f:uri.image(image: solution.image.0,  width: '768')}"
+                                                             title="{solution.title} - {solution.category.name}"
+                                                             alt="{solution.title} - {solution.category.name}"
+                                                             class="img-zoom lazyload img-responsive"
+                                                             data-preload="{f:if(condition: settings.preload.images, then: 'true', else: 'false')}"/>
+                                                    </div>
+                                                </div>
+                                            </f:then>
+                                            <f:else>
+                                                <div class="wrap_image 2">
+                                                    <div class="vertical-center">
+                                                        <img src="{f:uri.image(src: 'EXT:bootstrap_package/Resources/Public/Images/blank.gif')}"
+                                                             data-src="{f:uri.image(src: solution.imageori,  height: '185')}"
+                                                             data-large="{f:uri.image(src: solution.imageori,  width: '640')}"
+                                                             data-medium="{f:uri.image(src: solution.imageori, width: '940')}"
+                                                             data-small="{f:uri.image(src: solution.imageori, width: '990')}"
+                                                             data-extrasmall="{f:uri.image(src: solution.imageori,  width: '768')}"
+                                                             title="{solution.title} - {solution.category.name}"
+                                                             alt="{solution.title} - {solution.category.name}"
+                                                             class="img-zoom lazyload img-responsive"
+                                                             data-preload="{f:if(condition: settings.preload.images, then: 'true', else: 'false')}"/>
+                                                    </div>
+                                                </div>
+                                            </f:else>
+                                        </f:if>
+                                        <figcaption class="caption">
+                                            <f:format.crop maxCharacters="140">
+                                                {solution.title}
+
+                                            </f:format.crop>
+                                            <f:if condition="{solution.text}">
+                                                <f:format.crop maxCharacters="210" append="...">
+                                                    <f:format.stripTags>
+                                                        <f:format.html>{solution.text}</f:format.html>
+                                                    </f:format.stripTags>
+                                                </f:format.crop>
+                                            </f:if>
+                                        </figcaption>
+
+
+                                    </figure>
+
+
+                                </f:link.action>
+                            </div>
+                        </div>
+                    </f:for>
+                </div>
+            </f:if>
+        </f:for>
+    </div>
+</f:section>

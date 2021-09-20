@@ -1,0 +1,327 @@
+{namespace v=FluidTYPO3\Vhs\ViewHelpers}
+<f:layout name="Default" xmlns:f="http://www.w3.org/1999/html"/>
+
+This Template is responsible for displaying a single view for a domain object
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+Resources:
+Private:
+Templates:
+Show.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="main">
+    <h1>{solution.title}
+       <!-- <div class="float-right mb-3 btn-group btn-group-xs" role="group" aria-label="Extra-small button group">
+            <f:for each="{solution.branche}" as="branche" iteration="iterator">
+                <f:if condition="branche.title!=''">
+                    <f:link.page pageUid="{branche.pid}">
+                    <span title="{branche.title}" class="btn btn btn-default btn-xs"><f:format.crop maxCharacters="1"
+                                                                                                    append=""
+                                                                                                    respectWordBoundaries="false">{branche.title}</f:format.crop></span>
+                    </f:link.page>
+                </f:if>
+            </f:for>
+        </div>--><br>
+        <small>{solution.category.name}</small>
+    </h1>
+    <small>{solution.number}</small>
+    <div class="row frame">
+        <div class="float-left">
+            <div class="image">
+                <f:if condition="{solution.image}">
+                    <f:then>
+
+                        <f:for each="{solution.image}" as="image" iteration="iterator">
+                            <f:if condition="{iterator.isFirst}">
+                                <f:then>
+                                    <a class="xs-padding lightbox" data-lightbox-width="1024" data-lightbox-height="768"
+                                       rel="lightbox-group-{product.uid}" title="{solution.title}"
+                                       href="{f:uri.image(src:'{image.uid}',treatIdAsReference:1, minWidth:300, maxWidth:1600, minHeight:300, maxHeight:1200)}">
+                                        <f:image src="{image.uid}" width="350"
+                                                 title="{solution.title} - {solution.category.name}"
+                                                 alt="{solution.title} - {solution.category.name}"
+                                                 treatIdAsReference="TRUE"/>
+                                    </a>
+                                    <f:if condition="{solution.video}">
+                                        <div>
+                                            <f:for each="{solution.video->v:iterator.sort(order: 'ASC', sortBy: 'name')}"
+                                                   as="single_video">
+                                                <f:if condition="{single_video.id}">
+                                                    <div class="xs-padding">
+                                                        <div class="embed-responsive embed-responsive-16by9">
+                                                            <iframe width="420" height="275"
+                                                                    src="https://www.youtube.com/embed/{single_video.id}"
+                                                                    frameborder="0" allowfullscreen></iframe>
+                                                        </div>
+                                                    </div>
+                                                </f:if>
+
+                                                <f:if condition="{single_video.file}">
+
+                                                    <div class="xs-padding">
+                                                        <div class="embed-responsive embed-responsive-16by9">
+                                                            <f:media file="{single_video.file}" class="no-border"
+                                                                     width="420" height="275"/>
+                                                        </div>
+                                                    </div>
+                                                </f:if>
+                                                <!-- <v:media.video  src="fileadmin{single_video.file.originalResource.originalFile.identifier}" relative="0" class=""  title="{solution.title}" width="100%" height="auto" autoplay="1" controls="1" loop="1" muted="1" poster="NULL" preload="'auto'">
+                                                </v:media.video>-->
+                                            </f:for>
+                                        </div>
+                                    </f:if>
+
+                                </f:then>
+                                <f:else>
+                                    <a class="lightbox third" data-lightbox-width="1024" data-lightbox-height="768"
+                                       rel="lightbox-group-{product.uid}" title="{solution.title}"
+                                       href="{f:uri.image(src:'{image.uid}',treatIdAsReference:1, minWidth:300, maxWidth:1600, minHeight:300, maxHeight:1200)}">
+                                        <f:image class="img-responsive" src="{image.uid}" width="120" height="120c"
+                                                 alt="" treatIdAsReference="TRUE"/>
+                                    </a>
+                                </f:else>
+                            </f:if>
+
+                        </f:for>
+
+                    </f:then>
+                    <f:else>
+
+
+                        <a class="lightbox" data-lightbox-width="1024" data-lightbox-height="768"
+                           rel="lightbox-group-{product.uid}" title="{solution.title}"
+                           href="{f:uri.image(src:'{solution.imageori}', minWidth:300, maxWidth:1600, minHeight:300, maxHeight:1200)}">
+                            <f:image src="{solution.imageori}" width="350" alt=""/>
+                        </a>
+                        <f:if condition="{solution.video}">
+                            <div>
+                                <f:for each="{solution.video->v:iterator.sort(order: 'ASC', sortBy: 'name')}"
+                                       as="single_video">
+                                    <f:if condition="{single_video.id}">
+                                        <iframe width="420" height="275"
+                                                src="https://www.youtube.com/embed/{single_video.id}" frameborder="0"
+                                                allowfullscreen></iframe>
+                                    </f:if>
+                                    <v:media.video
+                                            src="fileadmin{single_video.file.originalResource.originalFile.identifier}"
+                                            relative="0" class="" title="{solution.title}" width="100%" height="auto"
+                                            autoplay="1" controls="1" loop="1" muted="1" poster="NULL" preload="'auto'">
+                                        <!-- tag content - may be ignored! -->
+                                    </v:media.video>
+                                </f:for>
+                            </div>
+                        </f:if>
+
+                    </f:else>
+                </f:if>
+
+            </div>
+
+
+        </div>
+        <div class="float-around">
+            <f:format.html>{solution.text}</f:format.html>
+
+
+        </div>
+    </div>
+    <!--Spezifikationen -->
+    <f:if condition="{solution.description}">
+        <div class="row no-margin panel panel-default">
+            <div class="col-md-12 panel-heading" role="tab" id="description">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" href="#spezification" aria-expanded="true"
+                       aria-controls="accordion-541-2">
+                        <f:translate key="tx_multiproducts_domain_model_solution.spezification"/>
+                        <span class="glyphicon glyphicon-chevron-down"></span></a>
+                </h4>
+            </div>
+            <div id="spezification" class="panel-collapse collapse" role="tabpanel" aria-labelledby="spezification">
+                <div class="panel-body">
+                    <f:format.html>
+                        <f:format.htmlentitiesDecode>{solution.description}</f:format.htmlentitiesDecode>
+                    </f:format.html>
+                </div>
+                <small>
+                    <f:translate key="tx_multiproducts_domain_model_product.changes_reserved"/>
+                </small>
+            </div>
+        </div>
+    </f:if>
+
+    <div class="">
+        <!--Controller -->
+        <f:if condition="{stmcontrollers.0}">
+            <div class="no-margin panel panel-default">
+                <div class="col-md-12 panel-heading mb-3" role="tab">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" href="#controller"
+                           aria-expanded="true" aria-controls="accordion-541-2">
+                            <f:translate key="tx_multiproducts_domain_model_product.controller"/>
+                            <span class="glyphicon glyphicon-chevron-down"></span></a>
+                    </h4>
+                </div>
+            </div>
+            <div class="row no-margin">
+                <div id="controller" class="panel-collapse collapse" role="tabpanel" aria-labelledby="controller">
+                    <div class="panel-body">
+
+                        <f:for each="{stmcontrollers}" as="stmcontroller">
+                            <f:link.action action="show" pageUid="{settings.stmcontroller.detailpid}"
+                                           controller="Stmcontroller" arguments="{stmcontroller : stmcontroller}">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 col-xs-6 mb-3">
+
+                                        <img src="{f:uri.image(src: 'EXT:bootstrap_package/Resources/Public/Images/blank.gif')}"
+                                             data-src="{f:uri.image(image: stmcontroller.images.0,  width: '185',height:'128')}"
+                                             data-large="{f:uri.image(image: stmcontroller.images.0,  width: '185',height:'128')}"
+                                             data-medium="{f:uri.image(image: stmcontroller.images.0, width: '940',height:'627')}"
+                                             data-small="{f:uri.image(image: stmcontroller.images.0, width: '990',height:'627')}"
+                                             data-extrasmall="{f:uri.image(image: stmcontroller.images.0,  width: '768',height:'512')}"
+                                             title="{stmcontroller.images.0.title}"
+                                             alt="{stmcontroller.images.0.alternative}" class="lazyload img-responsive"
+                                             data-preload="{f:if(condition: settings.preload.images, then: 'true', else: 'false')}"/>
+
+                                    </div>
+                                    <div class="col-lg-8 col-md-4 col-xs-6">
+                                        <h3> {stmcontroller.name}</h3>
+                                        <div>
+                                            <f:format.crop maxCharacters="500">
+                                                <f:format.html>{stmcontroller.shortdescription}</f:format.html>
+                                            </f:format.crop>
+                                        </div>
+                                    </div>
+                                </div>
+                            </f:link.action>
+
+                        </f:for>
+                    </div>
+                </div>
+            </div>
+        </f:if>
+
+        <f:if condition="{solution.specification}">
+            <div class="row  panel panel-default">
+                <div class="col-md-12 panel-heading mb-3" role="tab" id="description">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" href="#spezification"
+                           aria-expanded="true" aria-controls="accordion-541-1">
+                            <f:translate key="tx_multiproducts_domain_model_solution.specification"/>
+                            <span class="glyphicon glyphicon-chevron-down"></span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="spezification" class="panel-collapse collapse" role="tabpanel" aria-labelledby="spezification">
+                    <div class="panel-body">
+                        <f:format.html>
+                            <f:format.htmlentitiesDecode>{solution.specification}</f:format.htmlentitiesDecode>
+                        </f:format.html>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </f:if>
+        <f:if condition="{solution.file}">
+
+            <div class=" panel panel-default">
+                <div class="col-md-12 panel-heading mb-3" role="tab" id="description">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" href="#Downloads" aria-expanded="true"
+                           aria-controls="accordion-541-1">Downloads<span
+                                class="glyphicon glyphicon-chevron-down"></span></a>
+                    </h4>
+                </div>
+            </div>
+            <div class="">
+                <div id="Downloads" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Downloads">
+                    <div class="panel-body">
+                        <f:if condition="{downloads_localized.0.title}">
+                            <f:then>
+                                <f:for each="{downloads_localized}" as="filelocal">
+                                    <div class="media-heading">
+                                        <a href="fileadmin{filelocal.specification}" title="Download {filelocal.title}"><span
+                                                class="glyphicon glyphicon-download-alt"></span>{filelocal.title}</a>
+                                    </div>
+                                </f:for>
+                            </f:then>
+                            <f:else>
+
+                                <f:for each="{solution.file}" as="file">
+                                    <div class="media-heading">
+                                        <a href="{file.originalResource.publicUrl}"><span
+                                                class="glyphicon glyphicon-download-alt"></span>
+                                            {file.originalResource.name}</a>
+                                    </div>
+                                </f:for>
+                            </f:else>
+                        </f:if>
+
+                    </div>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                </div>
+            </div>
+
+
+        </f:if>
+
+
+    </div>
+
+    <div class="">
+        <div class="">
+
+            <a name="components"></a>
+            <f:if condition="{solution.product}">
+                <div class="well">
+                    <h4>
+                        <f:translate key="tx_multiproducts_domain_model_solution.components"/>
+                    </h4>
+                    <f:for each="{solution.product->v:iterator.sort(order: 'ASC', sortBy: 'name')}" as="product">
+                        <f:link.action action="show" pageUid="{product.category.pid}"   controller="Product"
+                                       arguments="{product : product}">
+
+                            <div class="mb-3 col-md-3 col-sm-6 collapse in col_product antrieb_{product.antriebsart.uid} mess_{product.messsystem.uid}">
+                                <div><h2> {product.name}</h2></div>
+                                <div class="image">
+                                    <f:if condition="{product.imagefile}">
+                                        <f:then>
+                                            <f:image src="{product.imagefile.uid}" width="350px" alt=""
+                                                     treatIdAsReference="TRUE"/>
+
+                                        </f:then>
+                                        <f:else>
+                                            <f:if condition="{product.image}">
+                                                <v:media.picture
+                                                        src="{product.image}"
+                                                        alt="{category.matriximage}" title="{category.matriximage}">
+                                                    <v:media.source media="(min-width: 992px)" width="185"/>
+                                                    <v:media.source media="(max-width: 1600px)" width="1600"/>
+                                                    <v:media.source width="185"/>
+
+                                                </v:media.picture>
+                                            </f:if>
+                                        </f:else>
+
+                                    </f:if>
+
+
+                                </div>
+                                <figcaption class="caption"> {product.url}</figcaption>
+                            </div>
+                        </f:link.action>
+                    </f:for>
+                </div>
+            </f:if>
+            <p></p>
+
+        </div>
+    </div>
+    <f:flashMessages/>
+</f:section>

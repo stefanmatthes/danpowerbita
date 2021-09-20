@@ -1,0 +1,81 @@
+
+<f:layout name="Default" />
+
+This Template is responsible for creating a table of domain objects.
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Templates:
+        List.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="main">
+<h1>Listing for Product1</h1>
+
+<f:flashMessages />
+
+<table  class="tx_multiproducts" >
+	<tr>
+		<th><f:translate key="tx_multiproducts_domain_model_product.name" /></th>
+		<th><f:translate key="tx_multiproducts_domain_model_product.alternativetitle" /></th>
+		<th><f:translate key="tx_multiproducts_domain_model_product.description" /></th>
+		<th><f:translate key="tx_multiproducts_domain_model_product.url" /></th>
+		<th><f:translate key="tx_multiproducts_domain_model_product.shortdescription" /></th>
+		<th><f:translate key="tx_multiproducts_domain_model_product.image" /></th>
+		<th><f:translate key="tx_multiproducts_domain_model_product.imagefile" /></th>
+		<th><f:translate key="tx_multiproducts_domain_model_product.matriximage" /></th>
+		<th><f:translate key="tx_multiproducts_domain_model_product.matriximagefile" /></th>
+		<th><f:translate key="tx_multiproducts_domain_model_product.drawing" /></th>
+		<th><f:translate key="tx_multiproducts_domain_model_product.drawingfile" /></th>
+		<th><f:translate key="tx_multiproducts_domain_model_product.video1" /></th>
+		<th><f:translate key="tx_multiproducts_domain_model_product.video2" /></th>
+		<th><f:translate key="tx_multiproducts_domain_model_product.videofile" /></th>
+		<th><f:translate key="tx_multiproducts_domain_model_product.download" /></th>
+		<th><f:translate key="tx_multiproducts_domain_model_product.download1" /></th>
+		<th><f:translate key="tx_multiproducts_domain_model_product.download2" /></th>
+		<th><f:translate key="tx_multiproducts_domain_model_product.download3" /></th>
+		<th><f:translate key="tx_multiproducts_domain_model_product.download4" /></th>
+		<th><f:translate key="tx_multiproducts_domain_model_product.download5" /></th>
+		<th><f:translate key="tx_multiproducts_domain_model_product.download6" /></th>
+		<th><f:translate key="tx_multiproducts_domain_model_product.download7" /></th>
+		<th><f:translate key="tx_multiproducts_domain_model_product.download8" /></th>
+		<th> </th>
+		<th> </th>
+	</tr>
+
+	<f:for each="{products}" as="product">
+		<tr>
+			<td><f:link.action action="show" arguments="{product : product}"> {product.name}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{product : product}"> {product.alternativetitle}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{product : product}"> {product.description}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{product : product}"> {product.url}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{product : product}"> {product.shortdescription}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{product : product}"> {product.image}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{product : product}"> {product.imagefile.originalResource.name}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{product : product}"> {product.matriximage}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{product : product}"> {product.matriximagefile.originalResource.name}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{product : product}"> {product.drawing}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{product : product}"> {product.drawingfile.originalResource.name}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{product : product}"> {product.video1}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{product : product}"> {product.video2}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{product : product}"> {product.videofile.originalResource.name}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{product : product}"> {product.download}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{product : product}"> {product.download1}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{product : product}"> {product.download2}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{product : product}"> {product.download3}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{product : product}"> {product.download4}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{product : product}"> {product.download5}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{product : product}"> {product.download6}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{product : product}"> {product.download7}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{product : product}"> {product.download8}</f:link.action></td>
+			<td><f:link.action action="edit" arguments="{product : product}">Edit</f:link.action></td>
+			<td><f:link.action action="delete" arguments="{product : product}">Delete</f:link.action></td>
+		</tr>
+	</f:for>
+</table>
+
+<f:link.action action="new">New Product</f:link.action>
+</f:section>

@@ -1,0 +1,98 @@
+{namespace v=FluidTYPO3\Vhs\ViewHelpers}
+
+<f:layout name="Default"/>
+
+This Template is responsible for displaying a single view for a domain object
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+Resources:
+Private:
+Templates:
+Show.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="main">
+    <h1> {solutioncategory.name}</h1>
+    <div class="frame">
+        <f:format.html>{solutioncategory.text}</f:format.html>
+        <f:if condition="{solutions}">
+            <div class="row row-eq-height mb-3 ">
+                <f:for each="{solutions}" as="solution">
+                    <div class="col-lg-3 col-sm-3 col-xs-12 mb-3">
+                        <div class="col_solution">
+                            <f:link.action pageUid="{solution.category.pid}" action="show" controller="Solution"
+                                           arguments="{solution : solution}">
+                                <div>
+                                    <f:if condition="{settings.darstellung} != 'solution'"><h3>
+                                        <f:format.crop maxCharacters="68" append="">
+                                            {solution.title}
+                                    </f:format.crop></h3></f:if>
+                                </div>
+                                <figure class="image">
+                                    <f:if condition="{solution.image}">
+                                        <f:then>
+                                            <div class="wrap_image 1">
+                                                <div class="vertical-center">
+                                                    <img src="{f:uri.image(src: 'EXT:bootstrap_package/Resources/Public/Images/blank.gif')}"
+                                                         data-src="{f:uri.image(image: solution.image.0,  height: '185')}"
+                                                         data-large="{f:uri.image(image: solution.image.0,  width: '640')}"
+                                                         data-medium="{f:uri.image(image: solution.image.0, width: '940')}"
+                                                         data-small="{f:uri.image(image: solution.image.0, width: '990')}"
+                                                         data-extrasmall="{f:uri.image(image: solution.image.0,  width: '768')}"
+                                                         title="{solution.title} - {solution.category.name}"
+                                                         alt="{solution.title} - {solution.category.name}"
+                                                         class="img-zoom lazyload img-responsive"
+                                                         data-preload="{f:if(condition: settings.preload.images, then: 'true', else: 'false')}"/>
+                                                </div>
+                                            </div>
+                                        </f:then>
+                                        <f:else>
+                                            <div class="wrap_image 2">
+                                                <div class="vertical-center">
+                                                    <img src="{f:uri.image(src: 'EXT:bootstrap_package/Resources/Public/Images/blank.gif')}"
+                                                         data-src="{f:uri.image(src: solution.imageori,  height: '185')}"
+                                                         data-large="{f:uri.image(src: solution.imageori,  width: '640')}"
+                                                         data-medium="{f:uri.image(src: solution.imageori, width: '940')}"
+                                                         data-small="{f:uri.image(src: solution.imageori, width: '990')}"
+                                                         data-extrasmall="{f:uri.image(src: solution.imageori,  width: '768')}"
+                                                         title="{solution.title} - {solution.category.name}"
+                                                         alt="{solution.title} - {solution.category.name}"
+                                                         class="img-zoom lazyload img-responsive"
+                                                         data-preload="{f:if(condition: settings.preload.images, then: 'true', else: 'false')}"/>
+                                                </div>
+                                            </div>
+                                        </f:else>
+                                    </f:if>
+                                </figure>
+                                <figcaption class=" caption">
+                                    <f:if condition="{settings.darstellung} != 'solution'">
+                                        <f:then>
+                                            <f:format.crop maxCharacters="210" append="...">
+                                                <f:format.stripTags>
+                                                    <f:format.html>{solution.text}</f:format.html>
+                                                </f:format.stripTags>
+                                            </f:format.crop>
+                                        </f:then>
+                                        <f:else>
+                                            <f:format.crop maxCharacters="500" append="">
+                                                <f:format.stripTags>
+                                                    <f:format.html>{solution.title}</f:format.html>
+                                                </f:format.stripTags>
+                                            </f:format.crop>
+                                        </f:else>
+                                    </f:if>
+
+                                </figcaption>
+                            </f:link.action>
+                        </div>
+                    </div>
+
+
+                </f:for>
+            </div>
+        </f:if>
+    </div>
+
+</f:section>

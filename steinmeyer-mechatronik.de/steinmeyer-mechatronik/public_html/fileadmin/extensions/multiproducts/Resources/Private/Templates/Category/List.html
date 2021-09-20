@@ -1,0 +1,48 @@
+{namespace v=FluidTYPO3\Vhs\ViewHelpers}
+
+<f:layout name="Default" />
+
+This Template is responsible for creating a table of domain objects.
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Templates:
+        List.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="main">
+<f:flashMessages />
+
+<div  class="tx_multiproducts row" >
+
+	<f:for each="{categories->v:iterator.sort(order: 'ASC', sortBy: 'pid')}" as="category">
+<f:comment>Controller nicht in der Listenansicht anzeigen</f:comment>
+		<f:if condition="{category.pid}!=256">
+		<div class="col-lg-3 col-md-4 col-sm-6 col_product_cat">
+			<f:link.action pageUid="{category.pid}" ><h2>{category.name}</h2>
+				<div class="image">
+					<f:if condition="{category.matriximagefile}">
+						<f:then>
+							<f:image src="{category.matriximagefile.uid}" width="225" alt="" treatIdAsReference="TRUE" />
+
+						</f:then>
+						<f:else>
+							<f:image src="fileadmin/extensions/multiproducts/Resources/Public/Images/categories/{category.matriximage}" alt="{category.name}" title="{category.name}" width="225" />
+
+						</f:else>
+					</f:if>
+
+
+				</div>
+
+			</f:link.action>
+			<figcaption class="caption">{category.content}</figcaption>
+		</div>
+		</f:if>
+	</f:for>
+</div>
+
+</f:section>

@@ -1,0 +1,114 @@
+{namespace v=FluidTYPO3\Vhs\ViewHelpers}
+
+<f:layout name="Default" />
+
+
+
+This Template is responsible for displaying a single view for a domain object
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Templates:
+        Show.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="main">
+
+
+<f:comment>  <f:image src="fileadmin/extensions/multiproducts/Resources/Public/Images/categories/{category.headerimage}" alt="{category.headerimage}" title="{category.headerimage}" width="870" /></f:comment>
+
+    <div class="row">
+       <f:if condition="{category.video}">
+               <div class="col-md-push-6 col-md-6">
+               <f:for each="{category.video}" as="video">
+                   <iframe width="420" height="275" src="https://www.youtube-nocookie.com/embed/{video.id}" frameborder="0"  allow="autoplay; encrypted-media" allowfullscreen></iframe>
+               </f:for>
+           </div>
+
+       </f:if>
+
+    <div class="col-sm-12" <f:if condition="{category.video}">class="col-md-pull-6 col-md-6"   </f:if>>
+        <h1>{category.name}</h1>
+        {category.metadescription}
+    </div>
+    </div>
+    <p></p>
+    <p></p>
+  <f:flashMessages />
+    <f:if condition="{category.uid}!=27">
+    <f:if condition="{antriebe.0}">
+   <div class="well">
+      <div class="product_filter1">
+
+
+           <div class="row">
+
+        <div class="col-md-2 " ><b><f:translate key="tx_multiproducts_domain_model_category.motors" /></b></div>
+
+             <f:for each="{antriebe}" as="antrieb">
+               <div class="col-md-2">
+                 <label class="checkbox-inline label_messsystem">
+                 <input type="checkbox" id="antrieb_{antrieb.uid}" class="checkbox_filter" name="antrieb" value="antrieb_{antrieb.uid}">{antrieb.name}
+               </label>
+               </div>
+             </f:for>
+
+
+      </div>
+
+
+          <div class="row">
+         <div class="col-md-2 " ><b><f:translate key="tx_multiproducts_domain_model_category.measuringsystem" /></b></div>
+
+
+                <f:for each="{messsysteme}" as="messsystem">
+                  <div class="col-md-2">
+                    <label class="checkbox-inline label_messsystem">
+                    <input type="checkbox" id="mess_{messsystem.uid}" class="checkbox_filter" name="messsystem" value="mess_{messsystem.uid}">{messsystem.name}
+                  </label> </div>
+                </f:for>
+
+
+
+        </div>
+
+
+      </div>
+    </div>
+    </f:if>
+    </f:if>
+
+    <div class="row">
+    <f:for each="{products->v:iterator.sort(order: 'ASC', sortBy: 'sorting')}" as="product">
+      <div data-category="antrieb_{product.antriebsart.uid}  <f:for each='{product.messsystem}' as='messsystem'> mess_{messsystem.uid} </f:for>" class="col-lg-3 col-md-4 col-sm-6 collapse in col_product antrieb_{product.antriebsart.uid}  <f:for each="{product.messsystem}" as="messsystem"> mess_{messsystem.uid} </f:for>">
+        <div>
+            <f:link.action action="show" controller="Product" arguments="{product : product}"><f:format.html> <h2> {product.name}</h2></f:format.html></f:link.action>
+        </div>
+        <div class="image">
+            <f:link.action action="show" controller="Product" arguments="{product : product}">
+
+          <f:if condition="{product.imagefile}">
+              <f:then>
+                  <f:image src="{product.imagefile.uid}" height="150"   width="225c"  alt="1 {product.name} - {product.category.name}" title="{product.name} - {product.category.name}"  treatIdAsReference="TRUE" />
+
+              </f:then>
+              <f:else>
+                  <f:if condition="{product.image}">
+                      <img src="{product.image}" alt="2 {product.name} - {product.category.name}" title="1 {product.name} - {product.category.name}" height ="150" width="225" />
+                  </f:if>
+              </f:else>
+          </f:if>
+
+            </f:link.action>
+        </div>
+
+        <figcaption class="caption"><f:format.crop maxCharacters="100"><f:format.html> {product.url}</f:format.html></f:format.crop></figcaption>
+      </div>
+
+
+    </f:for>
+    </div>
+  </f:section>

@@ -1,0 +1,271 @@
+{namespace v=FluidTYPO3\Vhs\ViewHelpers}
+
+<f:layout name="Default" xmlns:f="http://www.w3.org/1999/html" xmlns:f="http://www.w3.org/1999/html"/>
+
+This Template is responsible for displaying a single view for a domain object
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Templates:
+        Show.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="main">
+<h1>{product.name}</h1>
+  {product.url}
+<div class="row frame product_single">
+  <div class="col-md-5">
+      <f:if condition="{product.imagefile}">
+          <f:then>
+          <f:image src="{product.imagefile.uid}" width="350px" alt="" treatIdAsReference="TRUE" />
+          </f:then>
+          <f:else>
+              <f:if condition="{product.image}">
+                  <f:image src="fileadmin/extensions/multiproducts/Resources/Public/Images/product_images/{product.image}" alt="{category.matriximage}" title="{category.matriximage}" width="350px" />
+              </f:if>
+          </f:else>
+
+      </f:if>
+      <f:if condition="{product.videofile}">
+          <f:media
+                  class="embed-responsive-item"
+                  file="{product.videofile}"
+                  alt="{product.videofile.alternative}"
+                  title="{product.videofile.title}"
+          />
+      </f:if>
+      <f:if condition="{solutions1}">
+          <div class="">Solutions</div><div class="row">
+            <a href="#solutions" >
+              <f:for each="{solutions}" as="solution">
+                  <f:comment>  <f:debug>{solution}</f:debug></f:comment>
+                  <div class="pull-left" style="margin-left:10px;">
+                          <f:if condition="{solution.image}">
+                              <f:then>
+                                  <div class="image">
+                                      <f:image src="{solution.image.uid}" width="80c" height="80c"  alt="" treatIdAsReference="TRUE" />
+                                  </div>
+
+                              </f:then>
+                              <f:else>
+
+
+
+
+                                          <f:image src="{solution.imageori}" width="80c" height="80c"  alt=""  />
+
+
+
+                              </f:else>
+                          </f:if>
+
+
+
+
+
+
+
+                  </div>
+
+
+              </f:for>
+
+          </a>     </div>
+      </f:if>
+  </div>
+  <div class="col-md-7"><f:format.html >{product.shortdescription}</f:format.html></div>
+
+</div>
+    <div class="row no-margin panel panel-default">
+        <div class="col-md-12 panel-heading" role="tab" id="description">
+            <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" href="#spezification" aria-expanded="true" aria-controls="accordion-541-2"><f:translate key="tx_multiproducts_domain_model_product.spezification" /> <span class="glyphicon glyphicon-chevron-down"></span></a>
+            </h4>
+        </div>
+        <div id="spezification" class="panel-collapse collapse" role="tabpanel" aria-labelledby="spezification">
+            <div class="panel-body">
+                <f:format.html ><f:format.htmlentitiesDecode>{product.description}</f:format.htmlentitiesDecode></f:format.html>
+            </div>
+            <small><f:translate key="tx_multiproducts_domain_model_product.changes_reserved" /></small>
+        </div>
+    </div>
+
+    <f:if condition="{product.downloadfile}">
+
+        <div class="row no-margin panel panel-default">
+            <div class="col-md-12 panel-heading" role="tab" id="description">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" href="#Downloads" aria-expanded="true" aria-controls="accordion-541-1">
+                        <f:if condition="{product.category.uid}==27">
+                            <f:then>
+                                Downloads<span class="glyphicon glyphicon-chevron-down"></span>
+                            </f:then>
+                            <f:else>
+                                <f:translate key="tx_multiproducts_domain_model_product.download" /><span class="glyphicon glyphicon-chevron-down"></span>
+                            </f:else></f:if>
+                    </a>
+                </h4>
+            </div>
+        </div>
+        <div class="row no-margin">
+            <div id="Downloads" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Downloads">
+                <div class="panel-body">
+                    <f:if condition="{downloads_localized.0.name}">
+                        <f:then>
+
+                            <f:for each="{downloads_localized}" as="filelocal" >
+                                <div class="">
+                                    <div class="media-heading">
+                                        <a href="fileadmin{filelocal.download}" title="Download {filelocal.name}"><span class="glyphicon glyphicon-download-alt"></span>{filelocal.name}  </a>
+                                    </div>
+                                </div>
+                            </f:for>
+                        </f:then>
+                        <f:else>
+                            <f:if condition="{product.downloadfile}">
+                                <f:for each="{product.downloadfile}" as="file" >
+                                    <div class="">
+                                        <div class="media-heading">
+                                            <a href="{file.originalResource.publicUrl}" title="Download {file.originalResource.name}"><span class="glyphicon glyphicon-download-alt"></span>{file.originalResource.name}  </a>
+                                        </div>
+                                    </div>
+                                </f:for>
+                            </f:if>
+                        </f:else>
+                    </f:if>
+
+
+
+                </div>
+                <p></p><p></p><p></p>
+            </div>
+
+
+            <f:if condition="{product.drawingfile}">
+
+                <a title="DOWNLOAD" href="{product.drawingfile.originalResource.publicUrl}">
+                    <f:image src="{product.drawingfile.uid}" width="900" alt="" treatIdAsReference="TRUE" />
+                </a>
+                <p> <a title="DOWNLOAD" href="{product.drawingfile.originalResource.publicUrl}">
+                    <span class="glyphicon glyphicon-download-alt"></span> Download {product.drawingfile.originalResource.name }
+                </a>
+                </p>
+
+            </f:if>
+        </div>
+    </f:if>
+    <f:if condition="{solutions.0}">
+    <div class="row no-margin">
+        <div class="col-md-12 well">
+
+
+            <a name="solutions"></a>
+
+                <div class="">
+                    <h2><f:translate key="tx_multiproducts_domain_model_product.solutionswiththisproduct" /> {product.name}</h2>
+                    <div class="row ">
+                    <f:for each="{solutions}" as="solution">
+                        <f:comment>  <f:debug>{solution}</f:debug></f:comment>
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 col-eq-height">
+                            <div class="">
+                            <div class="image">
+                                <div class="wrap_image bg_white">
+                                    <div class="vertical-center">
+                                <f:if condition="{solution.image}">
+                                    <f:then>
+                                        <figure>
+
+                              <f:comment>             <a class="lightbox"  data-lightbox-width="1024" data-lightbox-height="768" rel="lightbox-group-{product.uid}" data-linktoproject="{f:uri.action(pageUid:'{solution.category.pageuid}', pluginName:'solutions',action:'show', absolute:'1',controller:'Solution',arguments:{solution:solution})}" title="{solution.title}"    href="{f:uri.image(image:'{solution.image.0}', minWidth:300, maxWidth:800, minHeight:300, maxHeight:800)}">
+                                                <f:for each="{solution.image}" as="image" iteration="iterator" >
+                                                    <f:if condition="{iterator.isFirst}">
+                                                                <f:image src="{image.uid}"  width="190c" height="190c" alt="" treatIdAsReference="TRUE" />
+                                                    </f:if>
+
+                                                </f:for>
+                                               </a>
+                                           </f:comment>
+                                            <f:link.action pageUid="{solution.category.pageuid}" action="show" controller="Solution" arguments="{solution : solution}">
+                                                <f:for each="{solution.image}" as="image" iteration="iterator" >
+                                                    <f:if condition="{iterator.isFirst}">
+                                                        <f:image src="{image.uid}"  width="190c" height="190c" alt="" treatIdAsReference="TRUE" />
+                                                    </f:if>
+
+                                                </f:for>
+
+                                                </f:link.action>
+
+
+
+                                        </figure>
+                                    </f:then>
+                                    <f:else>
+                                        <figure class="image">
+                                            <f:comment>           <a class="lightbox"  data-lightbox-width="1024" data-lightbox-height="768" rel="lightbox-group-{product.uid}" data-linktoproject="{f:uri.action(pageUid:'{solution.category.pageuid}', pluginName:'solutions',action:'show', absolute:'1',controller:'Solution',arguments:{solution:solution})}" title="{solution.title}"    href="{f:uri.image(src:'{solution.imageori}', minWidth:300, maxWidth:800, minHeight:300, maxHeight:800)}">
+                                                <f:image src="{solution.imageori}" width="190"   alt=""  />
+
+                                              </a>
+                                            </f:comment>
+                                            <f:link.action pageUid="{solution.category.pageuid}" action="show" controller="Solution" arguments="{solution : solution}">
+                                                <f:image src="{solution.imageori}" height="190"  alt=""  />
+
+
+                                            </f:link.action>
+
+                                </figure>
+
+                                    </f:else>
+                                </f:if>
+    </div></div>
+                                {solution.title}
+                            </div>
+
+
+                        </div>
+
+                        </div>
+
+
+                    </f:for>
+                        </div>
+                </div>
+
+
+
+        </div>
+    </div>
+</f:if>
+<f:comment>
+  <f:if condition="{product.branche}">
+      <div class="row no-margin">
+        <div class="col-md-12 well">
+            <h2>{product.name}<f:translate key="tx_multiproducts_domain_model_product.areaswiththisproduct" /> </h2>
+
+            <f:for each="{product.branche}" as="branche">
+        <div class="col-md-3">
+            <figure class="image">
+                <f:link.page  pageUid="{branche.pageuid}" >
+                    <f:image src="{branche.image.uid}" width="190c" height="100c"  alt="" treatIdAsReference="TRUE" />
+
+                    <div class=""><f:format.crop maxCharacters="50">{branche.title}</f:format.crop></div>
+                </f:link.page>
+                </figure>
+        </div>
+
+
+    </f:for>
+        </div>
+    </div>
+    </f:if>
+</f:comment>
+  <div class="row no-margin">
+
+  </div>
+
+
+    <p></p>
+
+<f:flashMessages />
+</f:section>

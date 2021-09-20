@@ -1,0 +1,45 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+{namespace v=FluidTYPO3\Vhs\ViewHelpers}
+
+<f:layout name="Default" />
+
+
+
+<f:section name="main">
+
+<f:flashMessages />
+	<div class="row ">
+		<f:for each="{stmcontrollers}" as="stmcontroller">
+			<div class="col-lg-3 col-md-4 col-sm-6 collapse in mb-3 stmcontroller">
+				<div>
+					<f:link.action pageUid="{settings.stmcontroller.detailpid}" action="show" controller="Stmcontroller" arguments="{stmcontroller : stmcontroller}"><h2> {stmcontroller.name}</h2></f:link.action>
+				</div>
+				<f:link.action action="show" pageUid="{settings.stmcontroller.detailpid}" controller="Stmcontroller" arguments="{stmcontroller : stmcontroller}"><div class="image">
+					<div class="wrap_image">
+
+						<img  src="{f:uri.image(src: 'EXT:bootstrap_package/Resources/Public/Images/blank.gif')}"
+							  data-src="{f:uri.image(image: stmcontroller.images.0,  width: '185')}"
+							  data-large="{f:uri.image(image: stmcontroller.images.0,  width: '640')}"
+							  data-medium="{f:uri.image(image: stmcontroller.images.0, width: '940')}"
+							  data-small="{f:uri.image(image: stmcontroller.images.0, width: '990')}"
+							  data-extrasmall="{f:uri.image(image: stmcontroller.images.0,  width: '768')}"
+							  title="{stmcontroller.images.0.title}" alt="{stmcontroller.images.0.alternative}" class="img-zoom lazyload img-responsive" data-preload="{f:if(condition: settings.preload.images, then: 'true', else: 'false')}" />
+
+
+						<figcaption class="caption"><f:format.crop maxCharacters="200"><f:format.html>{stmcontroller.shortdescription}</f:format.html></f:format.crop></figcaption>
+						<div class="voltage">{stmcontroller.voltage}
+							<f:if condition="{stmcontroller.synchron}">
+							<div class="path">Bahn</div>
+						</f:if></div>
+					</div>
+			</f:link.action>
+				</div>
+
+
+			</div>
+
+
+		</f:for>
+	</div>
+</f:section>
+</html>

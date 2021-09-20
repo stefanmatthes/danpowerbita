@@ -1,0 +1,81 @@
+{namespace v=FluidTYPO3\Vhs\ViewHelpers}
+
+<f:layout name="Default" xmlns:f="http://www.w3.org/1999/html" xmlns:f="http://www.w3.org/1999/html"/>
+
+This Template is responsible for displaying a single view for a domain object
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+Resources:
+Private:
+Templates:
+Show.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="main">
+  <h1>{stmcontroller.name}</h1>
+
+  <div class="row frame stmcontroller_single">
+    <div class="col-md-5">
+      <div>{stmcontroller.voltage} 	<f:if condition="{stmcontroller.synchron}">
+      Bahn
+      </f:if></div>
+      <f:for each="{stmcontroller.images}" as="image">
+        <a  class="xs-padding lightbox" data-lightbox-width="1024" data-lightbox-height="768" rel="lightbox-group-{stmcontroller.uid}" title="{stmcontroller.name}"   href="{f:uri.image(src:'{image.uid}',treatIdAsReference:1, minWidth:300, maxWidth:1600, minHeight:300, maxHeight:1200)}">
+            <f:image src="{image.uid}" width="350px" alt="" treatIdAsReference="TRUE" />
+        </a>
+</f:for>
+    </div>
+    <div class="col-md-7"><f:format.html >{stmcontroller.description}</f:format.html></div>
+
+  </div>
+<f:if condition="{stmcontroller.specification}">
+  <div class="row no-margin panel panel-default">
+    <div class="col-md-12 panel-heading" role="tab" id="description">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" href="#spezification" aria-expanded="true" aria-controls="accordion-541-2"><f:translate key="tx_multiproducts_domain_model_stmcontroller.spezification" /> <span class="glyphicon glyphicon-chevron-down"></span></a>
+      </h4>
+    </div>
+  </div>
+  <div class="row no-margin">
+    <div id="spezification" class="panel-collapse collapse" role="tabpanel" aria-labelledby="spezification">
+      <div class="panel-body">
+        <f:format.html ><f:format.htmlentitiesDecode>{stmcontroller.specification}</f:format.htmlentitiesDecode></f:format.html>
+      </div>
+      <small><f:translate key="tx_multistmcontrollers_domain_model_stmcontroller.changes_reserved" /></small>
+    </div>
+  </div>
+</f:if>
+<f:if condition="{stmcontroller.download}">
+  <div class="row no-margin panel panel-default">
+    <div class="col-md-12 panel-heading" role="tab" id="description">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" href="#Downloads" aria-expanded="true" aria-controls="accordion-541-1"><f:translate key="tx_multistmcontrollers_domain_model_stmcontroller.download" /><span class="glyphicon glyphicon-chevron-down"></span></a>
+      </h4>
+    </div>
+  </div>
+  <div class="row no-margin">
+    <div id="Downloads" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Downloads">
+      <div class="panel-body">
+        <f:if condition="{stmcontroller.downloadfile}">
+          <f:for each="{stmcontroller.downloadfile}" as="file" >
+            <div class="">
+              <div class="media-heading">
+                <a href="{file.originalResource.publicUrl}" title="Download {file.originalResource.name}"><span class="glyphicon glyphicon-download-alt"></span> {file.originalResource.name}  </a>
+              </div>
+            </div>
+          </f:for>
+        </f:if>
+
+      </div>
+      <p></p><p></p><p></p>
+    </div>
+
+  </div>
+</f:if>
+
+  <p></p>
+
+  <f:flashMessages />
+</f:section>
