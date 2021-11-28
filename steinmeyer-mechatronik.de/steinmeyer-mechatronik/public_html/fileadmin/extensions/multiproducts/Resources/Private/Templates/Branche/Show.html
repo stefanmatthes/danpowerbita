@@ -62,12 +62,14 @@ Otherwise your changes will be overwritten the next time you save the extension 
                                             </f:else>
                                         </f:if>
                                         <figcaption class="caption">
+                                            <span>
                                             <f:format.crop maxCharacters="140">
                                                 {solution.title}
 
                                             </f:format.crop>
+                                            </span>
                                             <f:if condition="{solution.text}">
-                                                <f:format.crop maxCharacters="210" append="...">
+                                                <f:format.crop maxCharacters="160" append="...">
                                                     <f:format.stripTags>
                                                         <f:format.html>{solution.text}</f:format.html>
                                                     </f:format.stripTags>

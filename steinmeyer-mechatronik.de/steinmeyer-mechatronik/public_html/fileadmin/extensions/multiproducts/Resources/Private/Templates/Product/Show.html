@@ -212,18 +212,20 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
                 <div class="">
                     <h2><f:translate key="tx_multiproducts_domain_model_product.solutionswiththisproduct" /> {product.name}</h2>
-                    <div class="row ">
+                    <div class="row row-eq-height">
                     <f:for each="{solutions}" as="solution">
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 col-eq-height">
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 ">
                             <div class="">
                             <div class="image">
                                 <f:if condition="{solution.image}">
                                     <f:then>
-                                        <figure class="image">
+                                        <figure class="image 1" >
                                             <f:link.action pageUid="{solution.category.pageuid}" action="show" controller="Solution" arguments="{solution : solution}">
                                                 <f:for each="{solution.image}" as="image" iteration="iterator" >
                                                     <f:if condition="{iterator.isFirst}">
-                                                        <f:image src="{image.uid}"  width="190c" height="190c" alt="" treatIdAsReference="TRUE" />
+                                                       <div style="width: 190px;height:190px;background: #fff;">
+                                                           <f:image src="{image.uid}"  width="190"  class="img-responsive"  alt="" treatIdAsReference="TRUE" />
+                                                       </div>
                                                     </f:if>
 
                                                 </f:for>
@@ -235,10 +237,12 @@ Otherwise your changes will be overwritten the next time you save the extension 
                                         </figure>
                                     </f:then>
                                     <f:else>
-                                        <figure class="image">
+                                        <figure class="image 2" >
 
                                             <f:link.action pageUid="{solution.category.pageuid}" action="show" controller="Solution" arguments="{solution : solution}">
-                                                <f:image src="{solution.imageori}" width="190c" height="190c"  alt=""  />
+                                                <div style="width: 190px;height:190px;background: #fff;">
+                                                    <f:image src="{solution.imageori}" width="190" class="img-responsive" alt=""  />
+                                                </div>
                                                 {solution.title}
                                             </f:link.action>
                                         </figure>

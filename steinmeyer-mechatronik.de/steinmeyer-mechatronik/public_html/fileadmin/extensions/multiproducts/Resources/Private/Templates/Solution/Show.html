@@ -14,17 +14,17 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
 <f:section name="main">
     <h1>{solution.title}
-       <!-- <div class="float-right mb-3 btn-group btn-group-xs" role="group" aria-label="Extra-small button group">
-            <f:for each="{solution.branche}" as="branche" iteration="iterator">
-                <f:if condition="branche.title!=''">
-                    <f:link.page pageUid="{branche.pid}">
-                    <span title="{branche.title}" class="btn btn btn-default btn-xs"><f:format.crop maxCharacters="1"
-                                                                                                    append=""
-                                                                                                    respectWordBoundaries="false">{branche.title}</f:format.crop></span>
-                    </f:link.page>
-                </f:if>
-            </f:for>
-        </div>--><br>
+        <!-- <div class="float-right mb-3 btn-group btn-group-xs" role="group" aria-label="Extra-small button group">
+             <f:for each="{solution.branche}" as="branche" iteration="iterator">
+                 <f:if condition="branche.title!=''">
+                     <f:link.page pageUid="{branche.pid}">
+                     <span title="{branche.title}" class="btn btn btn-default btn-xs"><f:format.crop maxCharacters="1"
+                                                                                                     append=""
+                                                                                                     respectWordBoundaries="false">{branche.title}</f:format.crop></span>
+                     </f:link.page>
+                 </f:if>
+             </f:for>
+         </div>--><br>
         <small>{solution.category.name}</small>
     </h1>
     <small>{solution.number}</small>
@@ -323,5 +323,97 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
         </div>
     </div>
+
+    <div class="row ">
+        <div class="col-md-12">
+            <h2>
+                <f:translate key="tx_multiproducts_domain_model_product.alternativestothisproduct"/>
+                {solution.name}
+
+            </h2>
+            <div id="carousel-example-generic" class="carousel slide" data-interval="false" data-ride="carousel">
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    <f:for each="{solutions_same_category}" as="alternativproduct" iteration="iterator">
+                        <f:if condition="{iterator.isFirst}">
+                            <div class="item active">
+                        </f:if>
+                        <div data-target="#carousel" data-slide-to="{iterator.index}" class="col-sm-3">
+                            <div class="">
+                                <f:link.action action="show" controller="Product"
+                                               arguments="{product : product}">
+                                    <f:format.html>
+                                        <h2> {alternativproduct.name}</h2>
+                                    </f:format.html>
+                                </f:link.action>
+                                <div class="image">
+                                    <f:link.action action="show" controller="Product"
+                                                   arguments="{product : product}">
+
+                                        <f:if condition="{alternativproduct.imagefile}">
+                                            <f:then>
+                                                <f:image src="{alternativproduct.imagefile.uid}"
+                                                         height="150" width="225c"
+                                                         alt="1 {alternativproduct.name} - {alternativproduct.category.name}"
+                                                         title="{alternativproduct.name} - {alternativproduct.category.name}"
+                                                         treatIdAsReference="TRUE"/>
+
+                                            </f:then>
+                                            <f:else>
+                                                <f:if condition="{alternativproduct.image}">
+
+                                                    <f:image src="{alternativproduct.image}"
+                                                             height="150" width="225c"
+                                                             alt="2 {alternativproduct.name} - {alternativproduct.category.name}"
+                                                             title="{alternativproduct.name} - {alternativproduct.category.name}"
+                                                    />
+
+                                                </f:if>
+                                            </f:else>
+                                        </f:if>
+
+                                    </f:link.action>
+                                </div>
+
+                                <figcaption class="caption">
+                                    <f:format.crop maxCharacters="220">
+                                        <f:format.html> {alternativproduct.url}</f:format.html>
+                                    </f:format.crop>
+                                </figcaption>
+
+                            </div>
+                        </div>
+                        <f:if condition="{iterator.cycle} % 4">
+                            <f:else>
+                </div>
+                <div class="item">
+                    </f:else>
+                    </f:if>
+                    <f:if condition="{iterator.isLast}">
+                </div>
+                </f:if>
+                </f:for>
+
+
+            </div>
+
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+
+    </div>
+    </div>
+
     <f:flashMessages/>
 </f:section>
